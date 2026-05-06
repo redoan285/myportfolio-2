@@ -5,27 +5,33 @@ import { ExternalLink, Globe } from "lucide-react";
 
 const projects = [
   {
-    title: "E-Commerce Platform",
-    description: "Full-stack Next.js marketplace with cart, auth, Stripe payments, and real-time inventory management. Deployed on Vercel with PostgreSQL.",
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80",
-    tags: ["Next.js", "Stripe", "PostgreSQL", "Tailwind"],
+    title: "Keep Your Friendships Alive",
+    description: "A heartfelt platform to keep friendships alive - where you can stay connected with your loved ones, share memorable moments, and strengthen relationships.",
+    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
+    tags: ["React.js", "React Router DOM", "Tailwind CSS", "React Toastify"],
+    liveLink: "https://keep-your-friendships-alive-by-redoan.netlify.app/",
+    githubLink: "https://github.com/redoan285/Assignment-7",
     accent: "rgba(0,229,255,0.12)",
     accentBorder: "rgba(0,229,255,0.2)",
   },
   {
-    title: "Analytics Dashboard",
-    description: "Real-time data visualization platform built with React, Recharts, and a Node.js backend. Features live WebSocket data streams.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-    tags: ["React", "Node.js", "WebSocket", "Recharts"],
-    accent: "rgba(168,85,247,0.1)",
+    title: "Digital Platform Tools",
+    description: "A powerful digital tools platform that provides various digital tools and resources. A fully featured application built with modern web technologies.",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+    tags: ["React.js", "React Router DOM", "Tailwind CSS", "React Toastify"],
+    liveLink: "https://digitools-platform-by-redoan.netlify.app/",
+    githubLink: "https://github.com/redoan285/DigiTools-Platform-",
+    accent: "rgba(168,85,247,0.12)",
     accentBorder: "rgba(168,85,247,0.2)",
   },
   {
-    title: "Portfolio CMS",
-    description: "Content management system with Next.js App Router, MDX blog, GitHub integration, and automated deployment pipeline.",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
-    tags: ["Next.js", "MDX", "GitHub API", "Vercel"],
-    accent: "rgba(255,107,53,0.1)",
+    title: "Your Third Project",
+    description: "Add your third project description here. You can add more projects to this array.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+    tags: ["React", "Node.js", "MongoDB", "Express"],
+    liveLink: "https://your-third-project.netlify.app/",
+    githubLink: "https://github.com/redoan285/your-third-project",
+    accent: "rgba(255,107,53,0.12)",
     accentBorder: "rgba(255,107,53,0.2)",
   },
 ];
@@ -46,7 +52,7 @@ export default function Projects() {
             Featured Projects
           </p>
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 800, letterSpacing: "-0.025em", marginBottom: 56 }}>
-            Recent <span className="gradient-text">Work</span>
+            My <span className="gradient-text">Projects</span>
           </h2>
         </motion.div>
 
@@ -61,8 +67,11 @@ export default function Projects() {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               whileHover={{ y: -6 }}
               style={{
-                background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "1.75rem", overflow: "hidden", cursor: "default",
+                background: "rgba(255,255,255,0.02)", 
+                border: "1px solid rgba(255,255,255,0.07)",
+                borderRadius: "1.75rem", 
+                overflow: "hidden", 
+                cursor: "default",
                 transition: "border-color 0.3s",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.accentBorder)}
@@ -77,22 +86,53 @@ export default function Projects() {
                 />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(3,7,18,0.9) 0%, transparent 50%)" }} />
                 <div style={{ position: "absolute", top: 16, right: 16, display: "flex", gap: 8 }}>
-                  <motion.button whileHover={{ scale: 1.1 }} style={{
-                    background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255,255,255,0.15)", borderRadius: "50%",
-                    width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "white", cursor: "pointer",
-                  }}>
+                  {/* Live Demo Button */}
+                  <motion.a 
+                    whileHover={{ scale: 1.1 }}
+                    href={project.liveLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      background: "rgba(0,0,0,0.6)", 
+                      backdropFilter: "blur(8px)",
+                      border: "1px solid rgba(255,255,255,0.15)", 
+                      borderRadius: "50%",
+                      width: 36, 
+                      height: 36, 
+                      display: "flex", 
+                      alignItems: "center", 
+                      justifyContent: "center",
+                      color: "white", 
+                      cursor: "pointer",
+                      textDecoration: "none",
+                    }}
+                  >
                     <ExternalLink size={14} />
-                  </motion.button>
-                  <motion.button whileHover={{ scale: 1.1 }} style={{
-                    background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255,255,255,0.15)", borderRadius: "50%",
-                    width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "white", cursor: "pointer",
-                  }}>
+                  </motion.a>
+                  
+                  {/* GitHub Button */}
+                  <motion.a 
+                    whileHover={{ scale: 1.1 }}
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      background: "rgba(0,0,0,0.6)", 
+                      backdropFilter: "blur(8px)",
+                      border: "1px solid rgba(255,255,255,0.15)", 
+                      borderRadius: "50%",
+                      width: 36, 
+                      height: 36, 
+                      display: "flex", 
+                      alignItems: "center", 
+                      justifyContent: "center",
+                      color: "white", 
+                      cursor: "pointer",
+                      textDecoration: "none",
+                    }}
+                  >
                     <Globe size={14} />
-                  </motion.button>
+                  </motion.a>
                 </div>
               </div>
 
@@ -107,8 +147,12 @@ export default function Projects() {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {project.tags.map((tag) => (
                     <span key={tag} style={{
-                      fontSize: "0.75rem", fontWeight: 600, padding: "4px 12px", borderRadius: 20,
-                      background: project.accent, color: "rgba(255,255,255,0.8)",
+                      fontSize: "0.75rem", 
+                      fontWeight: 600, 
+                      padding: "4px 12px", 
+                      borderRadius: 20,
+                      background: project.accent, 
+                      color: "rgba(255,255,255,0.8)",
                       border: `1px solid ${project.accentBorder}`,
                     }}>
                       {tag}
@@ -120,7 +164,7 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* CTA Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -128,16 +172,32 @@ export default function Projects() {
           transition={{ duration: 0.5 }}
           style={{ textAlign: "center", marginTop: 52 }}
         >
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+          <a 
+            href="https://github.com/redoan285" 
+            target="_blank" 
+            rel="noopener noreferrer"
             style={{
-              display: "inline-flex", alignItems: "center", gap: 10,
-              background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.12)",
-              color: "white", fontWeight: 600, fontFamily: "var(--font-display)",
-              padding: "14px 30px", borderRadius: 40, fontSize: "0.95rem",
-              backdropFilter: "blur(4px)", transition: "all 0.25s",
+              display: "inline-flex", 
+              alignItems: "center", 
+              gap: 10,
+              background: "rgba(255,255,255,0.04)", 
+              border: "1px solid rgba(255,255,255,0.12)",
+              color: "white", 
+              fontWeight: 600, 
+              fontFamily: "var(--font-display)",
+              padding: "14px 30px", 
+              borderRadius: 40, 
+              fontSize: "0.95rem",
+              backdropFilter: "blur(4px)", 
+              transition: "all 0.25s",
+              textDecoration: "none",
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+            onMouseEnter={(e) => { 
+              e.currentTarget.style.background = "rgba(255,255,255,0.07)"; 
+            }}
+            onMouseLeave={(e) => { 
+              e.currentTarget.style.background = "rgba(255,255,255,0.04)"; 
+            }}
           >
             <Globe size={18} /> View All on GitHub
           </a>
