@@ -21,7 +21,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="py-16 border-t border-white/5 bg-bg-primary relative overflow-hidden">
+    <footer className="py-16 border-t border-white/5 bg-[#0f233d] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-12">
           
