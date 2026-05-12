@@ -1,7 +1,7 @@
 "use client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Star } from "lucide-react";
+import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
@@ -35,70 +35,63 @@ export default function Testimonials() {
   const inView = useInView(headRef, { once: true });
 
   return (
-    <section style={{ padding: "100px 0" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 28px" }}>
-        <motion.div ref={headRef}
+    <section className="py-24 md:py-32 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <motion.div 
+          ref={headRef}
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
+          className="mb-16 text-center lg:text-left"
         >
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--accent)", fontWeight: 700, marginBottom: 14 }}>
-            Testimonials
-          </p>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 800, letterSpacing: "-0.025em", marginBottom: 56 }}>
-            What Clients <span className="gradient-text">Say</span>
+          <span className="text-accent text-xs font-bold uppercase tracking-[0.4em] mb-4 block">Kind Words</span>
+          <h2 className="font-display text-4xl md:text-6xl font-black tracking-normal leading-tight text-white">
+            Client <span className="gradient-text">Feedback</span>
           </h2>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 24 }}
-          className="grid-cols-1 md:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {testimonials.map((t, i) => (
             <motion.div
               key={t.author}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              style={{
-                background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "1.75rem", padding: "32px 30px",
-                position: "relative", overflow: "hidden",
-              }}
+              className="group relative glass-card rounded-[2.5rem] p-8 md:p-12 overflow-hidden flex flex-col"
             >
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent)" }} />
-
-              {/* Stars */}
-              <div style={{ display: "flex", gap: 4, marginBottom: 20 }}>
-                {Array.from({ length: t.stars }).map((_, j) => (
-                  <Star key={j} size={14} fill="#fbbf24" stroke="none" />
-                ))}
+              {/* Animated top border line */}
+              <div className="absolute top-0 left-0 w-full h-[1px] bg-linear-to-r from-transparent via-accent/40 to-transparent group-hover:scale-x-110 transition-transform duration-700" />
+              
+              <div className="flex justify-between items-start mb-8">
+                <div className="flex gap-1">
+                  {Array.from({ length: t.stars }).map((_, j) => (
+                    <Star key={j} size={14} className="fill-accent text-transparent" />
+                  ))}
+                </div>
+                <Quote size={32} className="text-white/5 group-hover:text-accent/10 transition-colors duration-500" />
               </div>
 
-              {/* Large quote mark */}
-              <div style={{ position: "absolute", top: 20, right: 28, fontFamily: "Georgia, serif", fontSize: "5rem", color: "rgba(0,229,255,0.08)", lineHeight: 1, userSelect: "none" }}>"</div>
-
-              <blockquote style={{ color: "#d1d5db", lineHeight: 1.75, fontSize: "0.97rem", marginBottom: 24, position: "relative" }}>
+              <blockquote className="text-base md:text-lg text-white/80 leading-loose font-medium mb-10 italic flex-grow tracking-wide">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{
-                  width: 42, height: 42, borderRadius: "50%", flexShrink: 0,
-                  background: "linear-gradient(135deg, var(--accent), var(--accent-purple))",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "1rem", color: "#000",
-                }}>
+              <div className="flex items-center gap-5 mt-auto">
+                <div className="w-12 h-12 rounded-full flex-shrink-0 bg-linear-to-br from-accent to-accent-purple flex items-center justify-center font-display font-black text-black text-xl">
                   {t.author[0]}
                 </div>
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: "0.95rem", fontFamily: "var(--font-display)" }}>{t.author}</div>
-                  <div style={{ fontSize: "0.8rem", color: "var(--muted)" }}>{t.role}</div>
+                  <div className="font-display font-bold text-white text-lg tracking-tight">{t.author}</div>
+                  <div className="text-[10px] font-black text-white/30 tracking-[0.3em] uppercase">{t.role}</div>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+      
+      {/* Background decoration */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[20vw] h-[20vw] bg-accent-purple/5 blur-[100px] -z-10" />
     </section>
   );
 }

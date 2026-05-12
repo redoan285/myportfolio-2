@@ -1,177 +1,197 @@
 "use client";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Send, Mail, Globe, Link, X } from "lucide-react";
+import { Send, Mail, Globe, Link, X, CheckCircle, Loader2 } from "lucide-react";
 
 export default function Contact() {
   const headRef = useRef(null);
   const inView = useInView(headRef, { once: true });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setForm({ name: "", email: "", subject: "", message: "" });
-    setTimeout(() => setSent(false), 4000);
-  };
+    setStatus("loading");
 
-  const inputStyle = {
-    width: "100%",
-    background: "rgba(3,8,20,0.7)",
-    border: "1px solid rgba(255,255,255,0.1)",
-    borderRadius: "1rem",
-    padding: "15px 20px",
-    color: "white",
-    fontFamily: "var(--font-body)",
-    fontSize: "0.95rem",
-    outline: "none",
-    transition: "border-color 0.2s, box-shadow 0.2s",
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/redoanmollik582@gmail.com", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          ...form,
+          _subject: `New Portfolio Message: ${form.subject}`
+        }),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setForm({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 3000);
+      }
+    } catch (error) {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
   };
 
   return (
-    <section id="contact" style={{ padding: "100px 0 120px" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 28px" }}>
-        <motion.div ref={headRef}
+    <section id="contact" className="py-24 md:py-32 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <motion.div 
+          ref={headRef}
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
         >
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--accent)", fontWeight: 700, marginBottom: 14 }}>
-            Contact
-          </p>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 800, letterSpacing: "-0.025em", marginBottom: 16 }}>
+          <span className="text-accent text-xs font-bold uppercase tracking-[0.4em] mb-4 block">Get In Touch</span>
+          <h2 className="font-display text-4xl md:text-6xl font-extrabold tracking-normal mb-6 text-white leading-tight">
             Let&apos;s Build <span className="gradient-text">Something Great</span>
           </h2>
-          <p style={{ color: "var(--muted-light)", fontSize: "1.05rem", marginBottom: 56, maxWidth: 520 }}>
-            Have a project in mind? I&apos;d love to hear about it. Send me a message and I&apos;ll get back to you within 24 hours.
+          <p className="text-base md:text-lg text-white/70 max-w-xl leading-relaxed tracking-wide">
+            Have a project in mind? I&apos;d love to hear about it. Send me a message and I&apos;ll get back to you as soon as possible.
           </p>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "0.85fr 1.15fr", gap: 40, alignItems: "start" }}
-          className="grid-cols-1 lg:grid-cols-[0.85fr_1.15fr]">
-
-          {/* Left — info */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          
+          {/* Left: Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-5 flex flex-col gap-8"
           >
-            <div style={{
-              background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)",
-              borderRadius: "1.75rem", padding: "36px 32px",
-            }}>
-              <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.2rem", marginBottom: 24 }}>
-                Direct Contact
-              </h3>
-
-              <a href="mailto:redoanmollik582@gmail.com" style={{
-                display: "flex", alignItems: "center", gap: 14, marginBottom: 28,
-                color: "var(--muted-light)", textDecoration: "none", transition: "color 0.2s",
-              }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted-light)")}
+            <div className="glass-card rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden">
+              <h3 className="font-display text-2xl font-bold text-white mb-8 tracking-tight">Direct Channels</h3>
+              
+              <a 
+                href="mailto:redoanmollik582@gmail.com" 
+                className="group flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300"
               >
-                <div style={{
-                  width: 44, height: 44, borderRadius: "50%", flexShrink: 0,
-                  background: "rgba(0,229,255,0.08)", border: "1px solid rgba(0,229,255,0.2)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "var(--accent)",
-                }}>
-                  <Mail size={18} />
+                <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+                  <Mail size={22} />
                 </div>
                 <div>
-                  <div style={{ fontSize: "0.75rem", color: "var(--muted)", marginBottom: 2 }}>Email</div>
-                  <div style={{ fontWeight: 600, fontSize: "0.9rem" }}>redoanmollik582@gmail.com</div>
+                  <div className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Email Me</div>
+                  <div className="text-sm md:text-base font-semibold text-white tracking-wide">redoanmollik582@gmail.com</div>
                 </div>
               </a>
 
-              <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: 28 }}>
-                <h4 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.95rem", marginBottom: 18, color: "var(--muted-light)" }}>
-                  Find me on
-                </h4>
-                <div style={{ display: "flex", gap: 12 }}>
-                  {[{ icon: <Globe size={18} />, label: "GitHub" }, { icon: <Link size={18} />, label: "LinkedIn" }, { icon: <X size={18} />, label: "Twitter" }].map((s) => (
-                    <motion.a key={s.label} href="#" whileHover={{ scale: 1.1, borderColor: "rgba(0,229,255,0.3)" }}
-                      style={{
-                        width: 44, height: 44, borderRadius: "50%",
-                        background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        color: "var(--muted-light)", transition: "color 0.2s", textDecoration: "none",
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted-light)")}
+              <div className="mt-12 pt-10 border-t border-white/5">
+                <h4 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-8">Social Ecosystem</h4>
+                <div className="flex gap-4">
+                  {[
+                    { icon: <Globe size={20} />, label: "GitHub", href: "https://github.com/redoan285" },
+                    { icon: <Link size={20} />, label: "LinkedIn", href: "https://linkedin.com/in/redoan285" },
+                    { icon: <X size={20} />, label: "Twitter", href: "https://twitter.com/redoan285" }
+                  ].map((s) => (
+                    <a 
+                      key={s.label} 
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-accent hover:border-accent/40 hover:bg-accent/5 transition-all duration-300"
                       aria-label={s.label}
                     >
                       {s.icon}
-                    </motion.a>
+                    </a>
                   ))}
                 </div>
               </div>
 
-              <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: 28, paddingTop: 28 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#2aff8c", boxShadow: "0 0 6px #2aff8c", flexShrink: 0 }} />
-                  <span style={{ fontSize: "0.88rem", color: "var(--muted-light)" }}>Available for new projects</span>
-                </div>
+              <div className="mt-12 p-6 rounded-2xl bg-accent/5 border border-accent/20 flex items-center gap-4">
+                <div className="w-2 h-2 rounded-full bg-[#2aff8c] shadow-[0_0_8px_#2aff8c]" />
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Available for new opportunities</span>
               </div>
             </div>
           </motion.div>
 
-          {/* Right — form */}
+          {/* Right: Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-7"
           >
-            <form onSubmit={handleSubmit} style={{
-              background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)",
-              borderRadius: "1.75rem", padding: "36px 32px",
-              display: "flex", flexDirection: "column", gap: 18,
-            }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}
-                className="grid-cols-1 sm:grid-cols-2">
-                <input type="text" placeholder="Your Name" required value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  style={inputStyle}
-                  onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(0,229,255,0.08)"; }}
-                  onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.boxShadow = "none"; }}
-                />
-                <input type="email" placeholder="Your Email" required value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  style={inputStyle}
-                  onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(0,229,255,0.08)"; }}
-                  onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.boxShadow = "none"; }}
+            <form onSubmit={handleSubmit} className="glass-card rounded-[2.5rem] p-8 md:p-12 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] ml-1">Your Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="Redoan Ahmad" 
+                    required 
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-hidden focus:border-accent/50 focus:bg-white/10 transition-all placeholder:text-white/20 tracking-wide"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] ml-1">Email Address</label>
+                  <input 
+                    type="email" 
+                    placeholder="name@example.com" 
+                    required 
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-hidden focus:border-accent/50 focus:bg-white/10 transition-all placeholder:text-white/20 tracking-wide"
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] ml-1">Subject</label>
+                <input 
+                  type="text" 
+                  placeholder="How can I help you?" 
+                  required
+                  value={form.subject}
+                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-hidden focus:border-accent/50 focus:bg-white/10 transition-all placeholder:text-white/20 tracking-wide"
                 />
               </div>
-              <input type="text" placeholder="Subject" value={form.subject}
-                onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                style={inputStyle}
-                onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(0,229,255,0.08)"; }}
-                onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.boxShadow = "none"; }}
-              />
-              <textarea rows={6} placeholder="Tell me about your project..." required value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                style={{ ...inputStyle, resize: "none" }}
-                onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(0,229,255,0.08)"; }}
-                onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.boxShadow = "none"; }}
-              />
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] ml-1">Message</label>
+                <textarea 
+                  rows={5} 
+                  placeholder="Tell me about your project or vision..." 
+                  required 
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-hidden focus:border-accent/50 focus:bg-white/10 transition-all resize-none placeholder:text-white/20 leading-relaxed tracking-wide"
+                />
+              </div>
+
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02, boxShadow: "0 8px 40px rgba(0,229,255,0.35)" }}
+                disabled={status === "loading" || status === "success"}
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                style={{
-                  display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10,
-                  background: sent ? "linear-gradient(135deg, #2aff8c, #00d4aa)" : "linear-gradient(135deg, var(--accent), var(--accent-purple))",
-                  color: "#000", fontWeight: 700, fontFamily: "var(--font-display)",
-                  padding: "15px 30px", borderRadius: 40, fontSize: "0.95rem",
-                  border: "none", cursor: "pointer", transition: "background 0.3s",
-                  alignSelf: "flex-start",
-                }}
+                className={`w-full md:w-auto px-10 py-5 rounded-full font-display font-black text-black text-lg flex items-center justify-center gap-3 transition-all duration-300 uppercase tracking-widest ${
+                  status === "success" 
+                    ? "bg-[#2aff8c] shadow-[0_0_20px_rgba(42,255,140,0.4)]" 
+                    : status === "error"
+                    ? "bg-red-500 text-white"
+                    : "bg-linear-to-r from-accent to-accent-purple shadow-xl hover:shadow-accent/20"
+                }`}
               >
-                {sent ? "✓ Message Sent!" : <><Send size={16} /> Send Message</>}
+                {status === "loading" ? (
+                  <><Loader2 size={20} className="animate-spin" /> Sending...</>
+                ) : status === "success" ? (
+                  <><CheckCircle size={22} /> Sent Successfully</>
+                ) : status === "error" ? (
+                  <>Failed to Send</>
+                ) : (
+                  <><Send size={20} /> Send Message</>
+                )}
               </motion.button>
             </form>
           </motion.div>

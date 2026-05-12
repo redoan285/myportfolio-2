@@ -5,34 +5,31 @@ import { ExternalLink, Globe } from "lucide-react";
 
 const projects = [
   {
-    title: "Keep Your Friendships Alive",
-    description: "A heartfelt platform to keep friendships alive - where you can stay connected with your loved ones, share memorable moments, and strengthen relationships.",
+    title: "Friendship Platform",
+    description: "A heartfelt platform to stay connected with loved ones, share memorable moments, and strengthen relationships through interactive features.",
     image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
-    tags: ["React.js", "React Router DOM", "Tailwind CSS", "React Toastify"],
+    tags: ["React.js", "Tailwind CSS", "Framer Motion"],
     liveLink: "https://keep-your-friendships-alive-by-redoan.netlify.app/",
     githubLink: "https://github.com/redoan285/Assignment-7",
-    accent: "rgba(0,229,255,0.12)",
-    accentBorder: "rgba(0,229,255,0.2)",
+    color: "accent",
   },
   {
-    title: "Digital Platform Tools",
-    description: "A powerful digital tools platform that provides various digital tools and resources. A fully featured application built with modern web technologies.",
+    title: "Digital Toolset",
+    description: "A powerful platform providing essential digital utilities and resources. Features a clean interface and optimized performance for daily tasks.",
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
-    tags: ["React.js", "React Router DOM", "Tailwind CSS", "React Toastify"],
+    tags: ["Next.js", "TypeScript", "Node.js"],
     liveLink: "https://digitools-platform-by-redoan.netlify.app/",
     githubLink: "https://github.com/redoan285/DigiTools-Platform-",
-    accent: "rgba(168,85,247,0.12)",
-    accentBorder: "rgba(168,85,247,0.2)",
+    color: "accent-purple",
   },
   {
-    title: "Your Third Project",
-    description: "Add your third project description here. You can add more projects to this array.",
+    title: "SaaS Dashboard",
+    description: "Comprehensive analytics dashboard for tracking business metrics. Includes real-time data visualization and customizable reporting tools.",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-    tags: ["React", "Node.js", "MongoDB", "Express"],
+    tags: ["React", "Chart.js", "PostgreSQL"],
     liveLink: "https://your-third-project.netlify.app/",
     githubLink: "https://github.com/redoan285/your-third-project",
-    accent: "rgba(255,107,53,0.12)",
-    accentBorder: "rgba(255,107,53,0.2)",
+    color: "accent-warm",
   },
 ];
 
@@ -41,165 +38,104 @@ export default function Projects() {
   const inView = useInView(headRef, { once: true });
 
   return (
-    <section id="projects" style={{ padding: "100px 0" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 28px" }}>
-        <motion.div ref={headRef}
+    <section id="projects" className="py-24 md:py-32 bg-bg-secondary/30 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <motion.div 
+          ref={headRef}
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
+          className="mb-16 text-center md:text-left"
         >
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--accent)", fontWeight: 700, marginBottom: 14 }}>
-            Featured Projects
-          </p>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.2rem, 4vw, 3.5rem)", fontWeight: 800, letterSpacing: "-0.025em", marginBottom: 56 }}>
-            My <span className="gradient-text">Projects</span>
+          <span className="text-accent text-xs font-bold uppercase tracking-[0.4em] mb-4 block">Portfolio</span>
+          <h2 className="font-display text-4xl md:text-6xl font-black tracking-normal leading-tight text-white">
+            Selected <span className="gradient-text">Projects</span>
           </h2>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}
-          className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {projects.map((project, i) => (
             <motion.article
               key={project.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              whileHover={{ y: -6 }}
-              style={{
-                background: "rgba(255,255,255,0.02)", 
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "1.75rem", 
-                overflow: "hidden", 
-                cursor: "default",
-                transition: "border-color 0.3s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.accentBorder)}
-              onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)")}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: i * 0.1 }}
+              className="group relative flex flex-col glass-card rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 border-white/5 hover:border-white/20"
             >
-              {/* Thumbnail */}
-              <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
-                <img src={project.image} alt={project.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              {/* Image Container */}
+              <div className="relative aspect-video overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(3,7,18,0.9) 0%, transparent 50%)" }} />
-                <div style={{ position: "absolute", top: 16, right: 16, display: "flex", gap: 8 }}>
-                  {/* Live Demo Button */}
-                  <motion.a 
-                    whileHover={{ scale: 1.1 }}
-                    href={project.liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      background: "rgba(0,0,0,0.6)", 
-                      backdropFilter: "blur(8px)",
-                      border: "1px solid rgba(255,255,255,0.15)", 
-                      borderRadius: "50%",
-                      width: 36, 
-                      height: 36, 
-                      display: "flex", 
-                      alignItems: "center", 
-                      justifyContent: "center",
-                      color: "white", 
-                      cursor: "pointer",
-                      textDecoration: "none",
-                    }}
-                  >
-                    <ExternalLink size={14} />
-                  </motion.a>
-                  
-                  {/* GitHub Button */}
-                  <motion.a 
-                    whileHover={{ scale: 1.1 }}
-                    href={project.githubLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      background: "rgba(0,0,0,0.6)", 
-                      backdropFilter: "blur(8px)",
-                      border: "1px solid rgba(255,255,255,0.15)", 
-                      borderRadius: "50%",
-                      width: 36, 
-                      height: 36, 
-                      display: "flex", 
-                      alignItems: "center", 
-                      justifyContent: "center",
-                      color: "white", 
-                      cursor: "pointer",
-                      textDecoration: "none",
-                    }}
-                  >
-                    <Globe size={14} />
-                  </motion.a>
-                </div>
-              </div>
-
-              {/* Body */}
-              <div style={{ padding: "24px 26px 28px" }}>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", fontWeight: 700, marginBottom: 10 }}>
-                  {project.title}
-                </h3>
-                <p style={{ color: "var(--muted-light)", fontSize: "0.9rem", lineHeight: 1.7, marginBottom: 20 }}>
-                  {project.description}
-                </p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                  {project.tags.map((tag) => (
-                    <span key={tag} style={{
-                      fontSize: "0.75rem", 
-                      fontWeight: 600, 
-                      padding: "4px 12px", 
-                      borderRadius: 20,
-                      background: project.accent, 
-                      color: "rgba(255,255,255,0.8)",
-                      border: `1px solid ${project.accentBorder}`,
-                    }}>
+                <div className="absolute inset-0 bg-linear-to-t from-bg-primary via-transparent to-transparent opacity-60" />
+                
+                {/* Floating Tags */}
+                <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                  {project.tags.slice(0, 2).map(tag => (
+                    <span key={tag} className="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-[9px] font-black text-white uppercase tracking-[0.2em]">
                       {tag}
                     </span>
                   ))}
+                </div>
+              </div>
+
+              {/* Content Body */}
+              <div className="p-8 flex flex-col flex-grow">
+                <h3 className="font-display text-2xl font-bold text-white mb-4 group-hover:text-accent transition-colors tracking-tight">
+                  {project.title}
+                </h3>
+                <p className="text-white/60 text-sm md:text-base leading-relaxed mb-8 line-clamp-3 tracking-wide">
+                  {project.description}
+                </p>
+                
+                <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
+                  <div className="flex gap-3">
+                    <a 
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-xl bg-white/5 hover:bg-accent hover:text-black transition-all border border-white/10"
+                      aria-label="Live Demo"
+                    >
+                      <ExternalLink size={18} />
+                    </a>
+                    <a 
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-xl bg-white/5 hover:bg-white/20 transition-all border border-white/10 text-white/60 hover:text-white"
+                      aria-label="Source Code"
+                    >
+                      <Globe size={18} />
+                    </a>
+                  </div>
+                  
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 group-hover:text-accent transition-colors">
+                    Case Study →
+                  </span>
                 </div>
               </div>
             </motion.article>
           ))}
         </div>
 
-        {/* CTA Button */}
+        {/* View All Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          style={{ textAlign: "center", marginTop: 52 }}
+          className="mt-20 text-center"
         >
           <a 
             href="https://github.com/redoan285" 
             target="_blank" 
             rel="noopener noreferrer"
-            style={{
-              display: "inline-flex", 
-              alignItems: "center", 
-              gap: 10,
-              background: "rgba(255,255,255,0.04)", 
-              border: "1px solid rgba(255,255,255,0.12)",
-              color: "white", 
-              fontWeight: 600, 
-              fontFamily: "var(--font-display)",
-              padding: "14px 30px", 
-              borderRadius: 40, 
-              fontSize: "0.95rem",
-              backdropFilter: "blur(4px)", 
-              transition: "all 0.25s",
-              textDecoration: "none",
-            }}
-            onMouseEnter={(e) => { 
-              e.currentTarget.style.background = "rgba(255,255,255,0.07)"; 
-            }}
-            onMouseLeave={(e) => { 
-              e.currentTarget.style.background = "rgba(255,255,255,0.04)"; 
-            }}
+            className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 font-black font-display text-white text-xs tracking-[0.4em] uppercase transition-all shadow-xl"
           >
-            <Globe size={18} /> View All on GitHub
+            Explore More Work <Globe size={20} className="group-hover:rotate-12 transition-transform text-accent" />
           </a>
         </motion.div>
       </div>
